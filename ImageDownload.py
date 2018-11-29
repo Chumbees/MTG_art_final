@@ -6,12 +6,17 @@ with open("randomMultiIds.txt") as ids:
 
 content = [x.strip() for x in content]
 
+with open("artistNames.txt") as names:
+	name_array = names.readlines()
+
+name_array = [x.strip() for x in name_array]
+
 count = 1
-for c in content:
+for c,name in zip(content,name_array):
 	card = scrython.cards.Multiverse(id=c)
 	img_data = requests.get(card.image_uris(1, 'art_crop')).content
-	img_name = 'images_multiverse/' + str(count) +'_'+ c.strip() + '.jpg'
+	img_name = 'images_test/' + name +'.'+ c.strip() + '.' + str(count )+'.jpg'
 	with open(img_name, 'wb') as handler:
 		handler.write(img_data)
-	print(str(count) + ' - ' + c)
+	print(name +'.'+ c.strip() + '.' + str(count) +'.jpg')
 	count += 1
