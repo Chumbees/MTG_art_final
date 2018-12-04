@@ -99,7 +99,7 @@ model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accu
 model.fit(
 	x=tr_img_data,
 	y=tr_lbl_data,
-	epochs=50,
+	epochs=2000,
 	batch_size=100,
 	validation_data=(val_img_data, val_lbl_data))
 model.summary()
