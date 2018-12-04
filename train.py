@@ -93,9 +93,9 @@ model.add(Flatten())
 model.add(Dense(512,activation='relu'))
 model.add(Dropout(rate=0.5))
 model.add(Dense(10,activation='relu'))
-optimizer = RSMprop(lr=.0001)
+optimizer = RMSprop(lr=.0001)
 
-model.compile(optimizer=optimizer,loss='binary_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
 model.fit(
 	x=tr_img_data,
 	y=tr_lbl_data,
