@@ -9,9 +9,9 @@ from keras.models import Sequential
 from keras.layers import *
 from keras.optimizers import *
 
-train_data = 'c:/Users/lstra/Documents/PythonProjects/FinalProject/Git/MTG_art_final/DataSet2/Training'
-test_data = 'c:/Users/lstra/Documents/PythonProjects/FinalProject/Git/MTG_art_final/DataSet2/Test'
-val_data = 'c:/Users/lstra/Documents/PythonProjects/FinalProject/Git/MTG_art_final/DataSet2/Validation'
+train_data = 'Dataset2/Training'
+test_data = 'Dataset2/Test'
+val_data = 'Dataset2/Validation'
 
 def one_hot_label(img):
 	label = img.split('.')[0]
@@ -79,13 +79,13 @@ val_lbl_data = np.array([i[1] for i in val_images])
 model = Sequential()
 
 model.add(InputLayer(input_shape=[360,360,1]))
-model.add(Conv2D(filters=32,kernel_size=5,strides=1,padding='same',activation='relu'))
+model.add(Conv2D(filters=32,kernel_size=3,strides=1,padding='same',activation='relu'))
 model.add(MaxPool2D(pool_size=5,padding='same'))
 
-model.add(Conv2D(filters=50,kernel_size=5,strides=1,padding='same',activation='relu'))
+model.add(Conv2D(filters=64,kernel_size=3,strides=1,padding='same',activation='relu'))
 model.add(MaxPool2D(pool_size=5,padding='same'))
 
-model.add(Conv2D(filters=80,kernel_size=5,strides=1,padding='same',activation='relu'))
+model.add(Conv2D(filters=128,kernel_size=3,strides=1,padding='same',activation='relu'))
 model.add(MaxPool2D(pool_size=5,padding='same'))
 
 model.add(Dropout(0.25))
@@ -93,9 +93,9 @@ model.add(Flatten())
 model.add(Dense(512,activation='relu'))
 model.add(Dropout(rate=0.5))
 model.add(Dense(10,activation='relu'))
-optimizer = Adam(lr=.05)
+optimizer = RSMprop(lr=.0001)
 
-model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=optimizer,loss='binary_crossentropy',metrics=['accuracy'])
 model.fit(
 	x=tr_img_data,
 	y=tr_lbl_data,
