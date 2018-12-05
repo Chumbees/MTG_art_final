@@ -106,6 +106,8 @@ model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accu
 nb_train_samples = 1000
 nb_validation_samples = 100
 batch_size = 16
+img_width = 360
+img_height = 360
 
 train_datagen = ImageDataGenerator(
 	rescale=1. / 255,
