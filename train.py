@@ -92,8 +92,8 @@ model.add(Dropout(0.25))
 model.add(Flatten())
 model.add(Dense(512,activation='relu'))
 model.add(Dropout(rate=0.5))
-model.add(Dense(10,activation='relu'))
-optimizer = RMSprop(lr=.0001)
+model.add(Dense(10,activation='softmax'))
+optimizer = RMSprop(lr=.00005)
 
 model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
 model.fit(
