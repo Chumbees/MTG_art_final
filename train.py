@@ -54,6 +54,7 @@ def test_data_with_label():
 		img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 		img = cv2.resize(img, (360, 360))
 		test_images.append([np.array(img), one_hot_label(i)])
+	shuffle(test_images)
 	return test_images
 	
 def val_data_with_label():
@@ -63,6 +64,7 @@ def val_data_with_label():
 		img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 		img = cv2.resize(img, (360, 360))
 		val_images.append([np.array(img), one_hot_label(i)])
+	shuffle(val_images)
 	return val_images
 	
 training_images = train_data_with_label()
@@ -91,7 +93,7 @@ model.add(MaxPool2D(pool_size=5,padding='same'))
 model.add(Dropout(0.25))
 model.add(Flatten())
 model.add(Dense(512,activation='relu'))
-model.add(Dropout(rate=0.5))
+model.add(Dropout(rate=0.25))
 model.add(Dense(10,activation='softmax'))
 optimizer = RMSprop(lr=.00005)
 
@@ -99,7 +101,7 @@ model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accu
 model.fit(
 	x=tr_img_data,
 	y=tr_lbl_data,
-	epochs=2000,
+	epochs=500,
 	batch_size=100,
 	validation_data=(val_img_data, val_lbl_data))
 model.summary()
