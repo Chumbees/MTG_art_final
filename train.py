@@ -108,6 +108,7 @@ nb_validation_samples = 100
 batch_size = 16
 img_width = 360
 img_height = 360
+epochs=500
 
 train_datagen = ImageDataGenerator(
 	rescale=1. / 255,
