@@ -8,6 +8,8 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import *
 from keras.optimizers import *
+from keras.preprocessing.image import ImageDataGenerator
+
 
 train_data = 'Dataset2/Training'
 test_data = 'Dataset2/Test'
@@ -98,6 +100,41 @@ model.add(Dense(10,activation='softmax'))
 optimizer = RMSprop(lr=.00005)
 
 model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
+
+
+#Augmentation
+nb_train_samples = 1000
+nb_validation_samples = 100
+batch_size = 16
+
+train_datagen = ImageDataGenerator(
+	rescale=1. / 255,
+	shear_range=0.2,
+	zoom_range=0.2,
+	horizontal_flip=True)
+
+test_datagen = ImageDataGenerator(rescale=1. / 255)
+
+train_generator = train_datagen.flow_from_directory(
+	train_data_dir,
+	target_size=(img_width, img_height),
+	batch_size=batch_size,
+	class_mode='binary')
+
+validation_generator = test_datagen.flow_from_directory(
+	validation_data_dir,
+	target_size=(img_width, img_height),
+	batch_size=batch_size,
+	class_mode='binary')
+
+model.fit_generator(
+	train_generator,
+	steps_per_epoch=nb_train_samples // batch_size,
+	epochs=epochs,
+	validation_data=validation_generator,
+	validation_steps=nb_validation_samples // batch_size)
+#</Augmentation>
+
 model.fit(
 	x=tr_img_data,
 	y=tr_lbl_data,
