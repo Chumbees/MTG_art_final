@@ -105,9 +105,20 @@ model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accu
 
 
 #Augmentation
-datagen = ImageDataGenerator()
+datagen = ImageDataGenerator(
+	featurewise_center=True,
+	featurewise_std_normalization=True,
+	rotation_range=20,
+	width_shift_range=.2,
+	height_shift_range=.2,
+	horizontal_flip=True)
+
+
 datagen.fit(tr_img_data)
-model.fit_generator(datagen.flow(tr_img_data, tr_lbl_data, batch_size=32), steps_per_epoch=len(tr_img_data) / 32, epochs=epochs)
+model.fit_generator(datagen.flow(tr_img_data, tr_lbl_data, batch_size=32), 
+	steps_per_epoch=len(tr_img_data) / 32, 
+	epochs=epochs,
+	validation_data=(val_img_data, val_lbl_data))
 #/Augmentation
 
 
