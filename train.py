@@ -15,6 +15,8 @@ train_data = 'Dataset2/Training'
 test_data = 'Dataset2/Test'
 val_data = 'Dataset2/Validation'
 
+epochs = 100
+
 def one_hot_label(img):
 	label = img.split('.')[0]
 	if label == 'carl_critchlow':
@@ -104,9 +106,8 @@ model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accu
 
 #Augmentation
 datagen = ImageDataGenerator()
-datagen.fit(train_data)
-x_train, y_train = datagen.flow(train_data, train_data, batch_size=32)
-fit_generator(datagen, samples_per_epoch=len(train_data), epochs=100)
+datagen.fit(tr_img_data)
+model.fit_generator(datagen.flow(tr_img_data, tr_lbl_data, batch_size=32), steps_per_epoch=len(tr_img_data) / 32, epochs=epochs)
 #/Augmentation
 
 
